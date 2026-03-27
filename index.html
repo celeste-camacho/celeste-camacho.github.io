@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celeste Camacho — Comunicación · Datos · Arte</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0c0a;
+  --paper: #f5f0e8;
+  --paper2: #ede7d6;
+  --coral: #ff4d2e;
+  --teal: #00c9a7;
+  --gold: #f5c400;
+  --violet: #7b2fff;
+  --sky: #00aaff;
+  --text: #1a1714;
+  --muted: #6b6257;
+  --border: rgba(0,0,0,0.1);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--text);
+  cursor: none;
+  overflow-x: hidden;
+}
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--coral);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transition: transform 0.1s ease, background 0.3s;
+  transform: translate(-50%,-50%);
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--coral);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9998;
+  transition: transform 0.18s ease, border-color 0.3s;
+  transform: translate(-50%,-50%);
+  opacity: 0.6;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 1000; opacity: 0.4;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 40px;
+  background: rgba(245,240,232,0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: 2px;
+  color: var(--ink); text-decoration: none;
+}
+.nav-logo span { color: var(--coral); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--coral); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; overflow: hidden;
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 120px 40px 80px 60px;
+  position: relative; z-index: 2;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--muted); letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 24px; animation: slideUp 0.8s ease both;
+}
+.hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--coral); }
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4.5rem, 9vw, 8rem);
+  line-height: 0.92; letter-spacing: -1px; color: var(--ink);
+  animation: slideUp 0.8s ease 0.1s both;
+}
+.hero-name .line2 { color: var(--coral); }
+.hero-desc {
+  margin-top: 28px; font-size: 1rem; color: var(--muted);
+  line-height: 1.8; max-width: 400px; font-weight: 300;
+  animation: slideUp 0.8s ease 0.2s both;
+}
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 24px; animation: slideUp 0.8s ease 0.3s both;
+}
+.htag {
+  padding: 6px 14px; border-radius: 20px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.5px; border: 1px solid;
+}
+.htag.c { background: rgba(255,77,46,0.1); border-color: rgba(255,77,46,0.3); color: var(--coral); }
+.htag.t { background: rgba(0,201,167,0.1); border-color: rgba(0,201,167,0.3); color: var(--teal); }
+.htag.v { background: rgba(123,47,255,0.1); border-color: rgba(123,47,255,0.3); color: var(--violet); }
+.htag.g { background: rgba(245,196,0,0.12); border-color: rgba(245,196,0,0.4); color: #b8920a; }
+.htag.s { background: rgba(0,170,255,0.1); border-color: rgba(0,170,255,0.3); color: var(--sky); }
+.hero-cta {
+  display: flex; gap: 14px; margin-top: 36px;
+  animation: slideUp 0.8s ease 0.4s both;
+}
+.btn-fill {
+  padding: 13px 28px; background: var(--ink); color: var(--paper);
+  border-radius: 4px; font-size: 0.8rem; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-fill:hover { background: var(--coral); transform: translateY(-2px); }
+.btn-outline {
+  padding: 13px 28px; border: 1.5px solid var(--ink); color: var(--ink);
+  border-radius: 4px; font-size: 0.8rem; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-outline:hover { border-color: var(--coral); color: var(--coral); transform: translateY(-2px); }
+.hero-right { position: relative; overflow: hidden; background: var(--ink); }
+canvas#heroCanvas { width: 100%; height: 100%; display: block; }
+.hero-scroll-hint {
+  position: absolute; bottom: 32px; left: 60px;
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+  animation: slideUp 0.8s ease 0.6s both;
+}
+.scroll-line {
+  width: 40px; height: 1px; background: var(--muted);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%,100% { transform: scaleX(1); opacity: 1; }
+  50% { transform: scaleX(0.3); opacity: 0.4; }
+}
+
+/* SHARED */
+section { padding: 100px 60px; position: relative; }
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--coral); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--coral); }
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1; letter-spacing: 1px; color: var(--ink); margin-bottom: 48px;
+}
+
+/* ABOUT */
+#sobre-mi { background: var(--paper2); }
+.about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 72px; align-items: start; }
+.about-visual { position: relative; }
+.about-img-wrap { aspect-ratio: 3/4; background: var(--ink); border-radius: 2px; overflow: hidden; position: relative; }
+.about-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 12px;
+  color: rgba(255,255,255,0.2);
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+}
+.about-img-placeholder .big { font-size: 3rem; }
+.about-frame { position: absolute; top: -12px; left: -12px; right: 12px; bottom: -12px; border: 2px solid var(--coral); border-radius: 2px; z-index: -1; }
+.about-stat { position: absolute; bottom: -20px; right: -20px; background: var(--gold); padding: 16px 20px; border-radius: 2px; text-align: center; }
+.about-stat .num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--ink); line-height: 1; }
+.about-stat .lbl { font-size: 0.65rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink); opacity: 0.7; }
+.about-text p { font-size: 0.95rem; line-height: 1.9; color: var(--muted); font-weight: 300; margin-bottom: 18px; }
+.about-text p strong { color: var(--text); font-weight: 500; }
+.about-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.pill { padding: 7px 14px; background: var(--paper); border: 1px solid var(--border); border-radius: 2px; font-size: 0.78rem; font-weight: 500; color: var(--text); transition: all 0.2s; }
+.pill:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* CV DOWNLOAD BTN */
+.cv-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 28px; padding: 13px 24px;
+  background: var(--ink); color: var(--paper);
+  border-radius: 4px; font-size: 0.8rem; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase; text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.cv-btn:hover { background: var(--coral); transform: translateY(-2px); }
+
+/* SERVICES */
+#servicios { background: var(--paper); }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.service-card { background: var(--paper2); padding: 36px 28px; border: 1px solid var(--border); position: relative; overflow: hidden; transition: background 0.3s; }
+.service-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+.service-card:nth-child(1)::before { background: var(--coral); }
+.service-card:nth-child(2)::before { background: var(--teal); }
+.service-card:nth-child(3)::before { background: var(--violet); }
+.service-card:nth-child(4)::before { background: var(--gold); }
+.service-card:nth-child(5)::before { background: var(--sky); }
+.service-card:nth-child(6)::before { background: var(--coral); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-card:hover { background: var(--paper); }
+.service-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: rgba(0,0,0,0.06); line-height: 1; margin-bottom: 12px; }
+.service-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
+.service-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.5px; margin-bottom: 10px; }
+.service-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+/* PROYECTOS */
+#proyectos { background: var(--ink); }
+#proyectos .section-label { color: var(--gold); }
+#proyectos .section-label::after { background: var(--gold); }
+#proyectos .section-title { color: var(--paper); }
+.projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.project-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+.project-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-4px); }
+.project-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1.2fr 1fr; }
+.project-visual { height: 220px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.project-card.featured .project-visual { height: 100%; min-height: 260px; }
+.project-visual img { width: 100%; height: 100%; object-fit: cover; }
+.pv-1 { background: linear-gradient(135deg, #ff4d2e 0%, #f5c400 100%); }
+.pv-2 { background: linear-gradient(135deg, #00c9a7 0%, #00aaff 100%); }
+.pv-3 { background: linear-gradient(135deg, #7b2fff 0%, #ff4d2e 100%); }
+.pv-4 { background: linear-gradient(135deg, #f5c400 0%, #00c9a7 100%); }
+.pv-5 { background: linear-gradient(135deg, #00aaff 0%, #7b2fff 100%); }
+.pv-6 { background: linear-gradient(135deg, #ff4d2e 0%, #7b2fff 100%); }
+.pv-icon { font-size: 3.5rem; opacity: 0.9; position: relative; z-index: 2; }
+.pv-shape { position: absolute; width: 120px; height: 120px; border: 2px solid rgba(255,255,255,0.2); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: spinSlow 8s linear infinite; }
+.pv-shape2 { position: absolute; width: 180px; height: 180px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: spinSlow 12s linear infinite reverse; }
+@keyframes spinSlow { to { transform: translate(-50%,-50%) rotate(360deg); } }
+.project-info { padding: 24px; }
+.project-cats { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.pcat { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
+.pcat.coral { background: rgba(255,77,46,0.2); color: #ff8066; }
+.pcat.teal { background: rgba(0,201,167,0.2); color: #00e8be; }
+.pcat.violet { background: rgba(123,47,255,0.2); color: #a57aff; }
+.pcat.gold { background: rgba(245,196,0,0.2); color: #f5c400; }
+.pcat.sky { background: rgba(0,170,255,0.2); color: #5cc8ff; }
+.project-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.5px; color: var(--paper); margin-bottom: 8px; }
+.project-info p { font-size: 0.85rem; color: rgba(245,240,232,0.45); line-height: 1.7; font-weight: 300; }
+.project-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 0.75rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: rgba(245,240,232,0.4); text-decoration: none; transition: color 0.2s; }
+.project-link:hover { color: var(--gold); }
+.project-link::after { content: '→'; transition: transform 0.2s; }
+.project-link:hover::after { transform: translateX(4px); }
+.project-video { margin-top: 14px; border-radius: 4px; overflow: hidden; }
+.project-video iframe { width: 100%; height: 180px; border: none; display: block; }
+.project-imgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 14px; }
+.project-imgs img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; opacity: 0.8; transition: opacity 0.2s; }
+.project-imgs img:hover { opacity: 1; }
+.project-pdf-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 14px; background: rgba(245,196,0,0.15); border: 1px solid rgba(245,196,0,0.3); border-radius: 4px; font-size: 0.75rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: background 0.2s; }
+.project-pdf-link:hover { background: rgba(245,196,0,0.25); }
+
+/* FORMACIÓN */
+#formacion { background: var(--paper2); }
+.formacion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(to bottom, var(--coral), var(--teal), var(--violet)); }
+.tl-item { position: relative; padding: 0 0 24px 28px; }
+.tl-item::before { content: ''; position: absolute; left: -4px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--paper2); border: 2px solid var(--coral); transition: background 0.2s; }
+.tl-item:hover::before { background: var(--coral); }
+.tl-year { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--coral); margin-bottom: 4px; }
+.tl-title { font-size: 0.88rem; font-weight: 500; color: var(--text); margin-bottom: 3px; line-height: 1.4; }
+.tl-inst { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+
+/* HABILIDADES */
+#habilidades { background: var(--paper); }
+.skills-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.skills-group { background: var(--paper2); border: 1px solid var(--border); border-radius: 2px; padding: 28px; }
+.skills-group-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.skills-group-label.coral { color: var(--coral); border-color: rgba(255,77,46,0.2); }
+.skills-group-label.teal { color: var(--teal); border-color: rgba(0,201,167,0.2); }
+.skills-group-label.violet { color: var(--violet); border-color: rgba(123,47,255,0.2); }
+.skills-group-label.gold { color: #b8920a; border-color: rgba(245,196,0,0.2); }
+.skills-group-label.sky { color: var(--sky); border-color: rgba(0,170,255,0.2); }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.skill-tag { font-size: 0.75rem; padding: 5px 10px; background: var(--paper); border: 1px solid var(--border); border-radius: 2px; color: var(--text); font-weight: 400; }
+
+/* PUBLICACIONES */
+#publicaciones { background: var(--paper2); }
+.pub-list { display: flex; flex-direction: column; gap: 16px; }
+.pub-item { background: var(--paper); border: 1px solid var(--border); border-left: 3px solid var(--coral); border-radius: 2px; padding: 20px 24px; transition: border-left-color 0.2s; }
+.pub-item:hover { border-left-color: var(--teal); }
+.pub-item p { font-size: 0.88rem; color: var(--text); line-height: 1.7; }
+.pub-item a { color: var(--coral); text-decoration: none; }
+.pub-item a:hover { text-decoration: underline; }
+
+/* ACTIVISMO */
+#activismo { background: var(--paper); }
+.activ-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.activ-card { background: var(--paper2); border: 1px solid var(--border); border-radius: 2px; padding: 24px; display: flex; gap: 16px; align-items: flex-start; transition: border-color 0.2s, transform 0.2s; }
+.activ-card:hover { border-color: rgba(255,77,46,0.3); transform: translateY(-2px); }
+.activ-icon { font-size: 1.8rem; flex-shrink: 0; }
+.activ-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; }
+.activ-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+.activ-card a { color: var(--coral); text-decoration: none; }
+.activ-card a:hover { text-decoration: underline; }
+
+/* CONTACT */
+#contacto { background: var(--paper2); }
+.contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.contact-left p { font-size: 1rem; color: var(--muted); line-height: 1.9; font-weight: 300; margin-bottom: 36px; }
+.contact-email { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.4rem, 2.2vw, 2rem); color: var(--ink); text-decoration: none; display: block; margin-bottom: 32px; transition: color 0.2s; letter-spacing: 1px; word-break: break-all; }
+.contact-email:hover { color: var(--coral); }
+.socials { display: flex; gap: 10px; flex-wrap: wrap; }
+.social-btn { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1.5px solid var(--border); border-radius: 2px; font-size: 0.72rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--text); text-decoration: none; background: var(--paper); transition: all 0.2s; }
+.social-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); transform: translateY(-2px); }
+.contact-form-area { background: var(--paper); border: 1px solid var(--border); border-radius: 2px; padding: 40px; }
+.contact-form-area h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; margin-bottom: 28px; }
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-size: 0.72rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+.form-group input, .form-group textarea { width: 100%; padding: 11px 14px; background: var(--paper2); border: 1px solid var(--border); border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--text); transition: border-color 0.2s; resize: none; }
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--coral); }
+.form-group textarea { height: 100px; }
+.form-submit { width: 100%; padding: 14px; background: var(--ink); color: var(--paper); border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; cursor: none; transition: background 0.2s; }
+.form-submit:hover { background: var(--coral); }
+
+/* FOOTER */
+footer { background: var(--ink); color: rgba(245,240,232,0.3); padding: 32px 60px; display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; letter-spacing: 0.5px; font-family: 'DM Mono', monospace; }
+footer .f-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--paper); letter-spacing: 2px; }
+footer .f-logo span { color: var(--coral); }
+
+/* ANIMATIONS */
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* MOBILE */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { height: 280px; }
+  .hero-left { padding: 100px 24px 60px; }
+  section { padding: 72px 24px; }
+  .about-grid, .contact-wrap, .formacion-grid { grid-template-columns: 1fr; gap: 48px; }
+  .services-grid, .skills-groups { grid-template-columns: 1fr; }
+  .projects-grid, .activ-grid { grid-template-columns: 1fr; }
+  .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Celeste<span>.</span>Camacho</a>
+  <ul class="nav-links">
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#formacion">Formación</a></li>
+    <li><a href="#publicaciones">Publicaciones</a></li>
+    <li><a href="#activismo">Activismo</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-left">
+    <div class="hero-tag">La Granja · Córdoba · Argentina</div>
+    <h1 class="hero-name">
+      CELESTE<br><span class="line2">CAMACHO</span>
+    </h1>
+    <p class="hero-desc">
+      Comunicadora social · Activista climática · Docente e investigadora.<br>
+      Trabajos que entrecruzan <strong>arte, tecnología y ambiente</strong>.
+    </p>
+    <div class="hero-tags">
+      <span class="htag c">Comunicación Estratégica</span>
+      <span class="htag t">Ciencia de Datos · IA</span>
+      <span class="htag v">Arte Digital</span>
+      <span class="htag g">Producción Audiovisual</span>
+      <span class="htag s">Humanidades Ambientales</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#proyectos" class="btn-fill">Ver proyectos</a>
+      <a href="#contacto" class="btn-outline">Hablemos</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <canvas id="heroCanvas"></canvas>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    scroll para explorar
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section id="sobre-mi">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-frame"></div>
+      <div class="about-img-wrap">
+        <!-- REEMPLAZÁ ESTO con tu foto:
+        <img src="imagenes/foto-perfil.png" alt="Celeste Camacho" style="width:100%;height:100%;object-fit:cover">
+        -->
+        <div class="about-img-placeholder">
+          <span class="big">👤</span>
+          <span>foto-perfil.png</span>
+        </div>
+      </div>
+      <div class="about-stat">
+        <div class="num">+15</div>
+        <div class="lbl">Años de<br>Trayectoria</div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <div class="section-label">Sobre mí</div>
+      <h2 class="section-title">Arte<br>+ Datos<br>+ Ambiente</h2>
+      <p>
+        Soy comunicadora social especializada en <strong>comunicación estratégica digital, gestión de medios comunitarios y producción de contenidos</strong> con perspectiva de géneros, diversidad y ambiente.
+      </p>
+      <p>
+        Con más de 15 años de trayectoria en activismo ambiental y climático, gestión cooperativa e interinstitucional y docencia universitaria. <strong>Becaria del programa LLILAS Benson</strong> (University of Texas at Austin) e investigadora en humanidades ambientales, narrativas transmedia y tecnologías educativas.
+      </p>
+      <p>
+        Trabajo en la intersección entre el arte digital, la ciencia de datos y el territorio — convencida de que <strong>la tecnología y el arte tienen que estar juntos</strong> para generar transformaciones reales.
+      </p>
+      <div class="about-pills">
+        <span class="pill">Python · SQL · Git</span>
+        <span class="pill">Ciencia de Datos</span>
+        <span class="pill">Humanidades Ambientales</span>
+        <span class="pill">Arte digital · P5.js</span>
+        <span class="pill">Producción audiovisual</span>
+        <span class="pill">Narrativas transmedia</span>
+        <span class="pill">Perspectiva de género</span>
+        <span class="pill">Software libre</span>
+        <span class="pill">Capacitación docente</span>
+        <span class="pill">Comunicación comunitaria</span>
+      </div>
+      <a href="docs/ilassa_program.pdf" target="_blank" class="cv-btn">
+        📄 Descargar CV
+      </a>
+      <!-- Reemplazá el href con la ruta real a tu CV cuando lo subas:
+           href="docs/celeste-camacho-cv.pdf" -->
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-label reveal">Servicios</div>
+  <h2 class="section-title reveal">Lo que<br>hago</h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <span class="service-icon">📡</span>
+      <h3>Comunicación Digital Estratégica</h3>
+      <p>Diseño de estrategias de comunicación digital para organizaciones, instituciones y proyectos territoriales. Gestión de redes, planificación editorial, identidad digital y campañas participativas.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">02</div>
+      <span class="service-icon">📊</span>
+      <h3>Ciencia de Datos e Inteligencia Artificial</h3>
+      <p>Análisis de datos, visualizaciones interactivas y aplicación de IA para generar insights accionables. Automatización de procesos y gestión de bases de datos.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">03</div>
+      <span class="service-icon">🗺️</span>
+      <h3>Comunicación Territorial y Ambiental</h3>
+      <p>Estrategias de comunicación ancladas en el territorio y el ambiente, con perspectiva de géneros y derechos humanos. Trabajo con medios comunitarios y organizaciones sociales.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <span class="service-icon">🎨</span>
+      <h3>Diseño Visual y Arte Digital</h3>
+      <p>Identidad visual, diseño gráfico y arte digital. Piezas para redes, materiales impresos, programas de eventos y entregables institucionales. Arte que comunica con precisión y estética.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">05</div>
+      <span class="service-icon">🎬</span>
+      <h3>Producción Audiovisual</h3>
+      <p>Producción, edición y dirección de contenido audiovisual. Videoarte, series documentales, microensayos audiovisuales y producciones comunitarias. Contenidos sonoros y podcast.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">06</div>
+      <span class="service-icon">🎓</span>
+      <h3>Capacitación y Formación Docente</h3>
+      <p>Talleres y cursos en alfabetización digital, comunicación estratégica, lenguajes sonoros y audiovisuales, tecnologías educativas e IA. Para docentes, equipos institucionales y organizaciones.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="section-label reveal">Proyectos</div>
+  <h2 class="section-title reveal">Trabajos<br>seleccionados</h2>
+  <div class="projects-grid">
+
+    <!-- ILASSA — DESTACADO -->
+    <div class="project-card featured reveal">
+      <div class="project-visual pv-2">
+        <!-- Reemplazá con: <img src="imagenes/ilassa.png" style="width:100%;height:100%;object-fit:cover"> -->
+        <div class="pv-shape2"></div><div class="pv-shape"></div>
+        <span class="pv-icon">✦</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cats">
+          <span class="pcat gold">Arte Digital</span>
+          <span class="pcat sky">Diseño Editorial</span>
+          <span class="pcat teal">Internacional</span>
+        </div>
+        <h3>44ª Conferencia ILASSA — UT Austin</h3>
+        <p>Dirección de arte y producción de piezas de arte digital y diseño editorial para la conferencia <em>Inventing the Near Future: Knowledge, Memory and Imagination in Latin America</em>, organizada por ILASSA con apoyo de LLILAS Benson · University of Texas at Austin.</p>
+        <p style="margin-top:8px;">Entregables: programa digital e impreso, piezas para redes sociales, banners y pantallas. Portada con técnica de arte virtual propia.</p>
+        <div class="project-imgs">
+          <!-- Reemplazá los src con tus imágenes reales -->
+          <img src="imagenes/ilassa1.png" alt="ILASSA pieza 1" onerror="this.style.display='none'">
+          <img src="imagenes/ilassa2.png" alt="ILASSA pieza 2" onerror="this.style.display='none'">
+          <img src="imagenes/ilassa3.png" alt="ILASSA pieza 3" onerror="this.style.display='none'">
+        </div>
+        <a href="docs/ilassa_program.pdf" target="_blank" class="project-pdf-link">📄 Ver programa digital</a>
+      </div>
+    </div>
+
+    <!-- PULSOS COMUNALES -->
+    <div class="project-card reveal">
+      <div class="project-visual pv-1">
+        <div class="pv-shape2"></div><div class="pv-shape"></div>
+        <span class="pv-icon">🎬</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cats">
+          <span class="pcat coral">Videoarte</span>
+          <span class="pcat teal">Territorio</span>
+          <span class="pcat violet">Ecofeminismo</span>
+        </div>
+        <h3>Pulsos Comunales</h3>
+        <p>Videoarte que entreteje voces de mujeres activistas ambientales con imágenes de archivo propias. Una pieza que une cuerpo, memoria y territorio.</p>
+        <div class="project-video">
+          <iframe src="https://www.youtube.com/embed/Yhhepz-4C8s" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIVIENTES -->
+    <div class="project-card reveal">
+      <div class="project-visual pv-3">
+        <div class="pv-shape2"></div><div class="pv-shape"></div>
+        <span class="pv-icon">🌿</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cats">
+          <span class="pcat teal">Serie Audiovisual</span>
+          <span class="pcat coral">Ambiente</span>
+        </div>
+        <h3>Vivientes: Parte de la Trama</h3>
+        <p>Serie audiovisual ambiental que aborda la vida y los ecosistemas desde una perspectiva territorial y comunitaria.</p>
+        <div class="project-video">
+          <iframe src="https://www.youtube.com/embed/nPxItteT6xk" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- VESTIGIOS -->
+    <div class="project-card featured reveal">
+      <div class="project-visual pv-4">
+        <div class="pv-shape2"></div><div class="pv-shape"></div>
+        <span class="pv-icon">🏔️</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cats">
+          <span class="pcat violet">Investigación</span>
+          <span class="pcat gold">Microensayos</span>
+          <span class="pcat teal">Patrimonio</span>
+        </div>
+        <h3>Vestigios de lo Autóctono</h3>
+        <p>Microensayos audiovisuales producidos en el marco del proyecto de investigación I+D "Vestigios autóctonos: patrimonio natural a orillas del Ctalamochita" — SECYT-UNC / UNVM.</p>
+        <div class="project-imgs" style="grid-template-columns: repeat(2, 1fr); gap: 8px;">
+          <div class="project-video" style="margin-top:0">
+            <iframe src="https://player.vimeo.com/video/1177384970" allowfullscreen></iframe>
+          </div>
+          <div class="project-video" style="margin-top:0">
+            <iframe src="https://player.vimeo.com/video/1177394630" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACHAMAMITA -->
+    <div class="project-card reveal">
+      <div class="project-visual pv-5">
+        <div class="pv-shape2"></div><div class="pv-shape"></div>
+        <span class="pv-icon">🎙️</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cats">
+          <span class="pcat sky">Radio</span>
+          <span class="pcat coral">Ecofeminismo</span>
+        </div>
+        <h3>Pachamamita: Voces desde los Ecofeminismos</h3>
+        <p>Proyecto comunicacional en Radio Eterogenia, Centro Cultural España Córdoba. Coordinación y producción con perspectiva ecofeminista y territorial.</p>
+        <a href="https://eterogenia.com.ar/albums/pachamamita/" target="_blank" class="project-link">Radio Eterogenia</a>
+        <a href="https://open.spotify.com/playlist/1soB3cV8j5e5Ua5K2MC11q" target="_blank" class="project-link" style="margin-left:8px;">Spotify</a>
+      </div>
+    </div>
+
+    <!-- PRODUCCIONES COMUNITARIAS -->
+    <div class="project-card reveal">
+      <div class="project-visual pv-6">
+        <div class="pv-shape2"></div><div class="pv-shape"></div>
+        <span class="pv-icon">🤝</span>
+      </div>
+      <div class="project-info">
+        <div class="project-cats">
+          <span class="pcat coral">Comunidad</span>
+          <span class="pcat violet">Audiovisual</span>
+        </div>
+        <h3>Producciones Comunitarias</h3>
+        <p>Producciones audiovisuales para la comunidad indígena de La Higuera, La Tricota Cultural y Club Social Agua de Oro.</p>
+        <div class="project-video">
+          <iframe src="https://www.youtube.com/embed/sVmHwUjF1o4" allowfullscreen></iframe>
+        </div>
+        <a href="https://www.instagram.com/tricotacultural_" target="_blank" class="project-link">@tricotacultural_</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FORMACIÓN -->
+<section id="formacion">
+  <div class="section-label reveal">Trayectoria académica</div>
+  <h2 class="section-title reveal">Formación<br>continua</h2>
+  <div class="formacion-grid reveal">
+    <div>
+      <p style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--coral);text-transform:uppercase;margin-bottom:20px;">Educación Formal</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year">2026 — en curso</div>
+          <div class="tl-title">Digital Scholarship Research Fellow</div>
+          <div class="tl-inst">LLILAS Benson · University of Texas at Austin. Investigación sobre colecciones Tejiendo la Memoria y Voces de Mujeres.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2023–2026*</div>
+          <div class="tl-title">Maestría en Comunicación Digital Interactiva</div>
+          <div class="tl-inst">Facultad de Ciencias Políticas · Universidad Nacional de Rosario. *Finalización prevista 2026.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2025 — en curso</div>
+          <div class="tl-title">Tecnicatura Superior en Ciencia de Datos e IA</div>
+          <div class="tl-inst">Instituto Superior Politécnico Córdoba</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2025</div>
+          <div class="tl-title">Diplomatura en Comunicación Ambiental</div>
+          <div class="tl-inst">UNSAM</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2024 — en curso</div>
+          <div class="tl-title">Diplomatura en Humanidades Ambientales</div>
+          <div class="tl-inst">UNTREF · En el cruce con el Arte y la Tecnología</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2022</div>
+          <div class="tl-title">Licenciatura en Comunicación Social</div>
+          <div class="tl-inst">Facultad de Ciencias de la Comunicación · UNC. Orientación en Investigación y Planeamiento en Ciencias Sociales.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2025</div>
+          <div class="tl-title">Docente — Comunicación Estratégica y Tecnología</div>
+          <div class="tl-inst">Universidad Provincial de Córdoba (UPC)</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2025</div>
+          <div class="tl-title">Docente — Alfabetización Digital, Bases de Datos y Tecnología Educativa</div>
+          <div class="tl-inst">IPEM 317 San José de Calasanz · Mendiolaza, Córdoba</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--teal);text-transform:uppercase;margin-bottom:20px;">Formación Complementaria</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year">2025</div>
+          <div class="tl-title">Lenguajes de Programación · Código Creativo y Arte de Software</div>
+          <div class="tl-inst">Universidad Nacional de Rosario (UNR)</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2025</div>
+          <div class="tl-title">Formación de Formadores — Estrategias para la enseñanza de la programación</div>
+          <div class="tl-inst">ISEP · Ministerio de Educación de Córdoba · Fundación Sadosky</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2025</div>
+          <div class="tl-title">Formación de Formadores — La ciudadanía en un mundo atravesado por computadoras</div>
+          <div class="tl-inst">ISEP · Ministerio de Educación de Córdoba · Fundación Sadosky</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2025</div>
+          <div class="tl-title">Explorar la IA generativa en la escuela · Habilidades Digitales Verdes</div>
+          <div class="tl-inst">Chicos.net · Google / Wikimedia Uruguay</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2024</div>
+          <div class="tl-title">Narrativas Inmersivas y Realidad Virtual · Diseño Digital Interactivo</div>
+          <div class="tl-inst">Universidad Nacional de Rosario (UNR)</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2024</div>
+          <div class="tl-title">Gestión de Redes Sociales y Publicidad Digital en la Era de la IA</div>
+          <div class="tl-inst">UNTREF</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2024</div>
+          <div class="tl-title">Derechos y conocimiento libre en territorios digitales</div>
+          <div class="tl-inst">Escuela Wikimedia Argentina</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2023</div>
+          <div class="tl-title">Radio extendida, podcast social y audiencias activas</div>
+          <div class="tl-inst">Defensoría del Público</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2022</div>
+          <div class="tl-title">Seminario de Posgrado — Comunicación Digital y Género</div>
+          <div class="tl-inst">Especialización en Lenguaje y Comunicación Digital · UNC</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICACIONES -->
+<section id="publicaciones">
+  <div class="section-label reveal">Investigación y escritura</div>
+  <h2 class="section-title reveal">Publicaciones<br>académicas</h2>
+  <div class="pub-list reveal">
+    <div class="pub-item">
+      <p>Camacho, M. C. (2024). <strong>Tramas vivientes en relaciones cinemáticas: temporalidades creativas en el cortometraje Azul profundo de Sebastián Wiedemann.</strong> Revista TOMA UNO, N°12. <a href="https://doi.org/10.55442/tomauno.n12.2024.47091" target="_blank">DOI: 10.55442/tomauno.n12.2024.47091</a></p>
+    </div>
+    <div class="pub-item">
+      <p>Camacho, M. C. <strong>Áreas Desprotegidas: análisis de la gobernanza de las Áreas Protegidas de la Provincia de Córdoba.</strong> Revista FFyH-UNC. Repositorio CONICET.</p>
+    </div>
+    <div class="pub-item">
+      <p>Camacho, M. C. (2022). <strong>Ofrenda para la imaginación: ecofeminismos, prácticas comunicacionales y territorio.</strong> Trabajo Final de Grado. FCC-UNC.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVISMO -->
+<section id="activismo">
+  <div class="section-label reveal">Comunidad y territorio</div>
+  <h2 class="section-title reveal">Activismo<br>y colectivos</h2>
+  <div class="activ-grid reveal">
+    <div class="activ-card">
+      <span class="activ-icon">🎉</span>
+      <div>
+        <h3>La Tricota Cultural</h3>
+        <p>Integrante del encuentro y carnaval comunitario con 18 años de historia. Coordinación de cobertura colaborativa y gestión de redes sociales. <a href="https://www.instagram.com/tricotacultural_" target="_blank">@tricotacultural_</a></p>
+      </div>
+    </div>
+    <div class="activ-card">
+      <span class="activ-icon">💻</span>
+      <div>
+        <h3>FLISOL Sierras Chicas</h3>
+        <p>Integrante del Festival Latinoamericano de Instalación de Software Libre — movimiento que promueve la tecnología, cultura y conocimiento libres en la región. <a href="https://eventol.flisol.org.ar/events/flisol-sierras-chicas-2026/" target="_blank">Edición 2026</a></p>
+      </div>
+    </div>
+    <div class="activ-card">
+      <span class="activ-icon">📻</span>
+      <div>
+        <h3>Cooperativa Chaski</h3>
+        <p>Integrante de la cooperativa dedicada a formación, producción de contenidos, gestión de medios y asesoramiento a organizaciones. Miembros de FARCO. <a href="https://chaski.coop.ar" target="_blank">chaski.coop.ar</a></p>
+      </div>
+    </div>
+    <div class="activ-card">
+      <span class="activ-icon">🌱</span>
+      <div>
+        <h3>Investigación — SECYT-UNC</h3>
+        <p>Integrante del equipo "Transitando imágenes y territorios en la audiovisualidad de Córdoba (2010–2023)". Cartografías cinematográficas y derivas tecnopoéticas.</p>
+      </div>
+    </div>
+    <div class="activ-card">
+      <span class="activ-icon">🎙️</span>
+      <div>
+        <h3>Pachamamita — Radio Eterogenia</h3>
+        <p>Coordinación del proyecto comunicacional desde los ecofeminismos en el Centro Cultural España Córdoba. <a href="https://eterogenia.com.ar/albums/pachamamita/" target="_blank">Radio Eterogenia</a> · <a href="https://open.spotify.com/playlist/1soB3cV8j5e5Ua5K2MC11q" target="_blank">Spotify</a></p>
+      </div>
+    </div>
+    <div class="activ-card">
+      <span class="activ-icon">🌎</span>
+      <div>
+        <h3>LLILAS Benson — UT Austin</h3>
+        <p>Digital Scholarship Research Fellow 2026. Investigación sobre colecciones Tejiendo la Memoria y Voces de Mujeres, con enfoque en patrimonio, género y memoria desde América Latina.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contact-wrap">
+    <div class="reveal">
+      <div class="section-label">Contacto</div>
+      <h2 class="section-title">Trabajemos<br>juntos</h2>
+      <p>¿Tenés un proyecto, una idea, o querés charlar sobre comunicación, datos o arte? Me encanta conectar con personas y organizaciones que tienen cosas interesantes para construir.</p>
+      <a href="mailto:lic.celestecamacho@gmail.com" class="contact-email">lic.celestecamacho@gmail.com</a>
+      <div class="socials">
+        <a href="#" class="social-btn">🔗 LinkedIn</a>
+        <a href="https://www.instagram.com/tricotacultural_" target="_blank" class="social-btn">📷 Instagram</a>
+        <a href="https://eventol.flisol.org.ar/events/flisol-sierras-chicas-2026/" target="_blank" class="social-btn">💻 FLISOL</a>
+        <a href="https://chaski.coop.ar" target="_blank" class="social-btn">📻 Chaski</a>
+        <!-- Agregá tu LinkedIn cuando tengas el link -->
+      </div>
+    </div>
+    <div class="contact-form-area reveal">
+      <h3>Enviame un mensaje</h3>
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" placeholder="Tu nombre completo">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="tu@email.com">
+      </div>
+      <div class="form-group">
+        <label>Mensaje</label>
+        <textarea placeholder="Contame de qué se trata tu proyecto o consulta..."></textarea>
+      </div>
+      <button class="form-submit">Enviar mensaje</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Celeste<span>.</span>Camacho</div>
+  <div>© 2026 · Arte + Datos + Ambiente</div>
+  <div>La Granja, Córdoba · Argentina</div>
+</footer>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+
+// HERO CANVAS
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [], t = 0;
+const COLORS = ['#ff4d2e','#00c9a7','#f5c400','#7b2fff','#00aaff'];
+function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+resize();
+window.addEventListener('resize', resize);
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W; this.y = Math.random() * H;
+    this.size = Math.random() * 2 + 0.5;
+    this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    this.vy = (Math.random() - 0.5) * 0.4;
+    this.life = 1; this.decay = Math.random() * 0.003 + 0.001;
+    this.ox = this.x; this.oy = this.y;
+    this.freq = Math.random() * 0.02 + 0.005;
+    this.amp = Math.random() * 30 + 10;
+  }
+  update() {
+    this.x = this.ox + Math.sin(t * this.freq + this.oy * 0.01) * this.amp;
+    this.y += this.vy * 0.5; this.life -= this.decay;
+    if (this.life <= 0 || this.y > H || this.y < 0) this.reset();
+  }
+  draw() {
+    ctx.save(); ctx.globalAlpha = this.life * 0.8;
+    ctx.fillStyle = this.color; ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+  }
+}
+for (let i = 0; i < 220; i++) particles.push(new Particle());
+function drawLines() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 80) {
+        ctx.save(); ctx.globalAlpha = (1 - d/80) * 0.12;
+        ctx.strokeStyle = particles[i].color; ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); ctx.restore();
+      }
+    }
+  }
+}
+function drawShapes() {
+  ctx.save(); ctx.globalAlpha = 0.04; ctx.strokeStyle = '#f5c400'; ctx.lineWidth = 1;
+  const cx = W * 0.5, cy = H * 0.5, r = Math.min(W,H) * 0.38;
+  ctx.beginPath(); ctx.arc(cx + Math.sin(t*0.003)*10, cy + Math.cos(t*0.002)*10, r, 0, Math.PI*2); ctx.stroke(); ctx.restore();
+  ctx.save(); ctx.globalAlpha = 0.05; ctx.strokeStyle = '#00c9a7'; ctx.lineWidth = 0.8;
+  const ang = t * 0.002, tr = r * 0.7;
+  ctx.beginPath();
+  for (let i = 0; i < 3; i++) {
+    const a = ang + (i * Math.PI * 2/3);
+    i === 0 ? ctx.moveTo(cx + Math.cos(a)*tr, cy + Math.sin(a)*tr) : ctx.lineTo(cx + Math.cos(a)*tr, cy + Math.sin(a)*tr);
+  }
+  ctx.closePath(); ctx.stroke(); ctx.restore();
+}
+function animate() {
+  t++;
+  ctx.fillStyle = 'rgba(14,12,10,0.15)';
+  ctx.fillRect(0, 0, W, H);
+  drawShapes(); drawLines();
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animate);
+}
+animate();
+
+// REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 60);
+  });
+}, { threshold: 0.08 });
+reveals.forEach(el => observer.observe(el));
+
+// FORM
+document.querySelector('.form-submit').addEventListener('click', function() {
+  this.textContent = '✓ Mensaje enviado';
+  this.style.background = '#00c9a7';
+  setTimeout(() => { this.textContent = 'Enviar mensaje'; this.style.background = ''; }, 3000);
+});
+</script>
+</body>
+</html>
