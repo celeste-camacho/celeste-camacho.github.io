@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poema interactivo — Celeste Camacho</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0e0e0e; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script>
+let poema = [
+  "de","un","día","a","otro","una","mujer",
+  "se","detiene","duerme","no","muere",
+  "corre","hacia","unas","flores","soñadas",
+  "cuando","apenas","se","echa","a","la","cama",
+  "y","de","pronto","se","percibe","VIVA",
+  "y","despierta","y","corre","a","la","ducha",
+  "donde","echa","el","sostén","con","lo","sucio",
+  "y","contempla","sus","aguas:",
+  "la","vertiente","de","un","cuerpo",
+  "que","huele","a","negocios","y","rema",
+  "crepúsculo","inabarcable",
+  "se","abraza","bajo","el","agua:",
+  "no","hay","tejido","humano",
+  "que","no","esté","entre","negocios",
+  "datos","o","números","y","no",
+  "escriba","por","el","otro","lado:",
+  "me","niego","a","ser","vaca","de","empresa","griega",
+  "y","lo","grite","con","gestos","hacia","el","vidrio,",
+  "sin","palabras,","mostrando","los","dientes","y","el","pelo","sucio:",
+  "me","niego","a","ser","vaca","de","empresa","griega","!!"
+];
+
+let index = 0;
+let scrollOffset = 0;
+let maxVisible = 24;
+let wordsPerLine = 6;
+let wordObjects = [];
+
+function setup() {
+  createCanvas(800, 600);
+  textFont("Georgia");
+  smooth();
+}
+
+function draw() {
+  background(20);
+  fill(10, 14, 6, 100);
+  noStroke();
+  rect(0, 0, width, height);
+
+  for (let wo of wordObjects) {
+    wo.alpha = min(255, wo.alpha + 15);
+    if (wo.isVIVA) {
+      textSize(28);
+      textStyle(BOLD);
+      fill(230, 255, 180, wo.alpha);
+      drawingContext.shadowColor = 'rgba(180,255,100,0.6)';
+      drawingContext.shadowBlur = 14;
+    } else {
+      textSize(22);
+      textStyle(NORMAL);
+      fill(235, 230, 210, wo.alpha);
+      drawingContext.shadowBlur = 0;
+    }
+    text(wo.word, wo.x, wo.y);
+    drawingContext.shadowBlur = 0;
+  }
+
+  if (index === 0) {
+    textSize(13);
+    textStyle(NORMAL);
+    fill(200, 200, 180, 120);
+    text("[ click para comenzar ]", width/2 - 80, height/2);
+  }
+
+  noStroke();
+  fill(180, 210, 130, 60);
+  rect(0, height - 3, (index / poema.length) * width, 3);
+}
+
+function mousePressed() {
+  if (index < poema.length) {
+    index++;
+    if (index > maxVisible) scrollOffset++;
+    rebuildWords();
+  }
+}
+
+function doubleClicked() {
+  index = 0;
+  scrollOffset = 0;
+  wordObjects = [];
+}
+
+function rebuildWords() {
+  wordObjects = [];
+  textSize(22);
+  let x = width * 0.06;
+  let y = 60;
+  let lineH = 38;
+  for (let i = scrollOffset; i < min(index, scrollOffset + maxVisible); i++) {
+    if (i % wordsPerLine === 0 && i > scrollOffset) {
+      y += lineH;
+      x = width * 0.06;
+    }
+    let isNueva = (i === index - 1);
+    wordObjects.push({
+      word: poema[i],
+      x: x, y: y,
+      alpha: isNueva ? 0 : 255,
+      isVIVA: poema[i] === "VIVA"
+    });
+    x += textWidth(poema[i]) + 10;
+  }
+}
+</script>
+</body>
+</html>
