@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Celeste Camacho — Comunicación · Datos · Arte</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #0e0c0a;
-  --paper: #f5f0e8;
-  --paper2: #ede7d6;
-  --coral: #ff4d2e;
-  --teal: #00c9a7;
-  --gold: #f5c400;
-  --violet: #7b2fff;
-  --sky: #00aaff;
-  --text: #1a1714;
-  --muted: #6b6257;
+  --ink: #2a2119;
+  --paper: #f7f1e4;
+  --paper2: #efe5d1;
+  --coral: #d95f2e;
+  --teal: #6d8a5c;
+  --gold: #e0a83b;
+  --violet: #7d5f84;
+  --sky: #7fa3b8;
+  --text: #231c15;
+  --muted: #7a6f61;
   --border: rgba(0,0,0,0.1);
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -59,13 +59,13 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   display: flex; justify-content: space-between; align-items: center;
   padding: 20px 40px;
-  background: rgba(245,240,232,0.88);
+  background: rgba(247,241,228,0.88);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
 .nav-logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.4rem; letter-spacing: 2px;
+  font-family: 'Funnel Display', sans-serif;
+  font-size: 1.4rem; letter-spacing: 2px; font-weight: 600;
   color: var(--ink); text-decoration: none;
 }
 .nav-logo span { color: var(--coral); }
@@ -96,9 +96,9 @@ nav {
 }
 .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--coral); }
 .hero-name {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Funnel Display', sans-serif;
   font-size: clamp(4.5rem, 9vw, 8rem);
-  line-height: 0.92; letter-spacing: -1px; color: var(--ink);
+  line-height: 0.98; letter-spacing: 0px; font-weight: 700; color: var(--ink);
   animation: slideUp 0.8s ease 0.1s both;
 }
 .hero-name .line2 { color: var(--coral); }
@@ -115,11 +115,11 @@ nav {
   padding: 6px 14px; border-radius: 20px;
   font-size: 0.72rem; font-weight: 500; letter-spacing: 0.5px; border: 1px solid;
 }
-.htag.c { background: rgba(255,77,46,0.1); border-color: rgba(255,77,46,0.3); color: var(--coral); }
-.htag.t { background: rgba(0,201,167,0.1); border-color: rgba(0,201,167,0.3); color: var(--teal); }
-.htag.v { background: rgba(123,47,255,0.1); border-color: rgba(123,47,255,0.3); color: var(--violet); }
-.htag.g { background: rgba(245,196,0,0.12); border-color: rgba(245,196,0,0.4); color: #b8920a; }
-.htag.s { background: rgba(0,170,255,0.1); border-color: rgba(0,170,255,0.3); color: var(--sky); }
+.htag.c { background: rgba(217,95,46,0.1); border-color: rgba(217,95,46,0.3); color: var(--coral); }
+.htag.t { background: rgba(109,138,92,0.1); border-color: rgba(109,138,92,0.3); color: var(--teal); }
+.htag.v { background: rgba(125,95,132,0.1); border-color: rgba(125,95,132,0.3); color: var(--violet); }
+.htag.g { background: rgba(224,168,59,0.14); border-color: rgba(224,168,59,0.4); color: #a3761f; }
+.htag.s { background: rgba(127,163,184,0.1); border-color: rgba(127,163,184,0.3); color: var(--sky); }
 .hero-cta {
   display: flex; gap: 14px; margin-top: 36px;
   animation: slideUp 0.8s ease 0.4s both;
@@ -139,7 +139,25 @@ nav {
 }
 .btn-outline:hover { border-color: var(--coral); color: var(--coral); transform: translateY(-2px); }
 .hero-right { position: relative; overflow: hidden; background: var(--ink); }
-canvas#heroCanvas { width: 100%; height: 100%; display: block; }
+.hero-collage {
+  position: absolute; inset: 0;
+  display: grid; gap: 8px; padding: 8px;
+  grid-template-columns: 1fr 1.1fr;
+  grid-template-rows: 1fr 1fr 0.9fr;
+  grid-template-areas: "a b" "a c" "d d";
+}
+.collage-fig { position: relative; overflow: hidden; border-radius: 2px; }
+.collage-fig img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s ease; }
+.collage-fig::after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(255,255,255,0.3); z-index: 2; }
+.fig-a { grid-area: a; }
+.fig-b { grid-area: b; }
+.fig-c { grid-area: c; }
+.fig-d { grid-area: d; }
+.fig-a img { transform: rotate(-1.6deg) scale(1.07); }
+.fig-b img { transform: rotate(1.4deg) scale(1.07); }
+.fig-c img { transform: rotate(-1deg) scale(1.07); }
+.fig-d img { transform: rotate(0.7deg) scale(1.08); }
+.collage-fig:hover img { transform: rotate(0deg) scale(1.16); }
 .hero-scroll-hint {
   position: absolute; bottom: 32px; left: 60px;
   display: flex; align-items: center; gap: 10px;
@@ -166,9 +184,9 @@ section { padding: 100px 60px; position: relative; }
 }
 .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--coral); }
 .section-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Funnel Display', sans-serif;
   font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1; letter-spacing: 1px; color: var(--ink); margin-bottom: 48px;
+  line-height: 1; letter-spacing: 1px; font-weight: 700; color: var(--ink); margin-bottom: 48px;
 }
 
 /* ABOUT */
@@ -183,10 +201,14 @@ section { padding: 100px 60px; position: relative; }
   color: rgba(255,255,255,0.2);
   font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
 }
-.about-img-placeholder .big { font-size: 3rem; }
+.about-img-placeholder .big {
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.25);
+  transform: rotate(45deg);
+}
 .about-frame { position: absolute; top: -12px; left: -12px; right: 12px; bottom: -12px; border: 2px solid var(--coral); border-radius: 2px; z-index: -1; }
 .about-stat { position: absolute; bottom: -20px; right: -20px; background: var(--gold); padding: 16px 20px; border-radius: 2px; text-align: center; }
-.about-stat .num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--ink); line-height: 1; }
+.about-stat .num { font-family: 'Funnel Display', sans-serif; font-size: 2.5rem; font-weight: 700; color: var(--ink); line-height: 1; }
 .about-stat .lbl { font-size: 0.65rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink); opacity: 0.7; }
 .about-text p { font-size: 0.95rem; line-height: 1.9; color: var(--muted); font-weight: 300; margin-bottom: 18px; }
 .about-text p strong { color: var(--text); font-weight: 500; }
@@ -218,9 +240,14 @@ section { padding: 100px 60px; position: relative; }
 .service-card:nth-child(6)::before { background: var(--coral); }
 .service-card:hover::before { transform: scaleX(1); }
 .service-card:hover { background: var(--paper); }
-.service-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: rgba(0,0,0,0.06); line-height: 1; margin-bottom: 12px; }
-.service-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
-.service-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.5px; margin-bottom: 10px; }
+.service-num { font-family: 'Funnel Display', sans-serif; font-size: 3rem; font-weight: 700; color: rgba(0,0,0,0.06); line-height: 1; margin-bottom: 12px; }
+.service-icon { width: 30px; height: 30px; background: var(--coral); transform: rotate(45deg); margin-bottom: 16px; display: block; }
+.service-card:nth-child(2) .service-icon { background: var(--teal); }
+.service-card:nth-child(3) .service-icon { background: var(--violet); }
+.service-card:nth-child(4) .service-icon { background: var(--gold); }
+.service-card:nth-child(5) .service-icon { background: var(--sky); }
+.service-card:nth-child(6) .service-icon { background: var(--coral); }
+.service-card h3 { font-family: 'Funnel Display', sans-serif; font-size: 1.4rem; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 10px; }
 .service-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
 
 /* PROYECTOS */
@@ -235,27 +262,27 @@ section { padding: 100px 60px; position: relative; }
 .project-visual { height: 220px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .project-card.featured .project-visual { height: 100%; min-height: 260px; }
 .project-visual img { width: 100%; height: 100%; object-fit: cover; }
-.pv-1 { background: linear-gradient(135deg, #ff4d2e 0%, #f5c400 100%); }
-.pv-2 { background: linear-gradient(135deg, #00c9a7 0%, #00aaff 100%); }
-.pv-3 { background: linear-gradient(135deg, #7b2fff 0%, #ff4d2e 100%); }
-.pv-4 { background: linear-gradient(135deg, #f5c400 0%, #00c9a7 100%); }
-.pv-5 { background: linear-gradient(135deg, #00aaff 0%, #7b2fff 100%); }
-.pv-6 { background: linear-gradient(135deg, #ff4d2e 0%, #7b2fff 100%); }
-.pv-icon { font-size: 3.5rem; opacity: 0.9; position: relative; z-index: 2; }
+.pv-1 { background: linear-gradient(135deg, #d95f2e 0%, #e0a83b 100%); }
+.pv-2 { background: linear-gradient(135deg, #6d8a5c 0%, #7fa3b8 100%); }
+.pv-3 { background: linear-gradient(135deg, #7d5f84 0%, #d95f2e 100%); }
+.pv-4 { background: linear-gradient(135deg, #e0a83b 0%, #6d8a5c 100%); }
+.pv-5 { background: linear-gradient(135deg, #7fa3b8 0%, #7d5f84 100%); }
+.pv-6 { background: linear-gradient(135deg, #d95f2e 0%, #7d5f84 100%); }
+.pv-icon { width: 46px; height: 46px; background: rgba(255,255,255,0.88); transform: rotate(45deg); position: relative; z-index: 2; display: block; }
 .pv-shape { position: absolute; width: 120px; height: 120px; border: 2px solid rgba(255,255,255,0.2); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: spinSlow 8s linear infinite; }
 .pv-shape2 { position: absolute; width: 180px; height: 180px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: spinSlow 12s linear infinite reverse; }
 @keyframes spinSlow { to { transform: translate(-50%,-50%) rotate(360deg); } }
 .project-info { padding: 24px; }
 .project-cats { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
 .pcat { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
-.pcat.coral { background: rgba(255,77,46,0.2); color: #ff8066; }
-.pcat.teal { background: rgba(0,201,167,0.2); color: #00e8be; }
-.pcat.violet { background: rgba(123,47,255,0.2); color: #a57aff; }
-.pcat.gold { background: rgba(245,196,0,0.2); color: #f5c400; }
-.pcat.sky { background: rgba(0,170,255,0.2); color: #5cc8ff; }
-.project-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.5px; color: var(--paper); margin-bottom: 8px; }
-.project-info p { font-size: 0.85rem; color: rgba(245,240,232,0.45); line-height: 1.7; font-weight: 300; }
-.project-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 0.75rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: rgba(245,240,232,0.4); text-decoration: none; transition: color 0.2s; }
+.pcat.coral { background: rgba(217,95,46,0.2); color: #e07f52; }
+.pcat.teal { background: rgba(109,138,92,0.2); color: #8aa576; }
+.pcat.violet { background: rgba(125,95,132,0.2); color: #9d82a6; }
+.pcat.gold { background: rgba(224,168,59,0.2); color: #e0a83b; }
+.pcat.sky { background: rgba(127,163,184,0.2); color: #9dbecf; }
+.project-info h3 { font-family: 'Funnel Display', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.5px; color: var(--paper); margin-bottom: 8px; }
+.project-info p { font-size: 0.85rem; color: rgba(247,241,228,0.45); line-height: 1.7; font-weight: 300; }
+.project-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 0.75rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: rgba(247,241,228,0.4); text-decoration: none; transition: color 0.2s; }
 .project-link:hover { color: var(--gold); }
 .project-link::after { content: '→'; transition: transform 0.2s; }
 .project-link:hover::after { transform: translateX(4px); }
@@ -264,8 +291,8 @@ section { padding: 100px 60px; position: relative; }
 .project-imgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 14px; }
 .project-imgs img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 2px; opacity: 0.8; transition: opacity 0.2s; }
 .project-imgs img:hover { opacity: 1; }
-.project-pdf-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 14px; background: rgba(245,196,0,0.15); border: 1px solid rgba(245,196,0,0.3); border-radius: 4px; font-size: 0.75rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: background 0.2s; }
-.project-pdf-link:hover { background: rgba(245,196,0,0.25); }
+.project-pdf-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 14px; background: rgba(224,168,59,0.15); border: 1px solid rgba(224,168,59,0.3); border-radius: 4px; font-size: 0.75rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: background 0.2s; }
+.project-pdf-link:hover { background: rgba(224,168,59,0.25); }
 
 /* FORMACIÓN */
 #formacion { background: var(--paper2); }
@@ -284,11 +311,11 @@ section { padding: 100px 60px; position: relative; }
 .skills-groups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .skills-group { background: var(--paper2); border: 1px solid var(--border); border-radius: 2px; padding: 28px; }
 .skills-group-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-.skills-group-label.coral { color: var(--coral); border-color: rgba(255,77,46,0.2); }
-.skills-group-label.teal { color: var(--teal); border-color: rgba(0,201,167,0.2); }
-.skills-group-label.violet { color: var(--violet); border-color: rgba(123,47,255,0.2); }
-.skills-group-label.gold { color: #b8920a; border-color: rgba(245,196,0,0.2); }
-.skills-group-label.sky { color: var(--sky); border-color: rgba(0,170,255,0.2); }
+.skills-group-label.coral { color: var(--coral); border-color: rgba(217,95,46,0.2); }
+.skills-group-label.teal { color: var(--teal); border-color: rgba(109,138,92,0.2); }
+.skills-group-label.violet { color: var(--violet); border-color: rgba(125,95,132,0.2); }
+.skills-group-label.gold { color: #a3761f; border-color: rgba(224,168,59,0.2); }
+.skills-group-label.sky { color: var(--sky); border-color: rgba(127,163,184,0.2); }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .skill-tag { font-size: 0.75rem; padding: 5px 10px; background: var(--paper); border: 1px solid var(--border); border-radius: 2px; color: var(--text); font-weight: 400; }
 
@@ -305,8 +332,8 @@ section { padding: 100px 60px; position: relative; }
 #activismo { background: var(--paper); }
 .activ-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .activ-card { background: var(--paper2); border: 1px solid var(--border); border-radius: 2px; padding: 24px; display: flex; gap: 16px; align-items: flex-start; transition: border-color 0.2s, transform 0.2s; }
-.activ-card:hover { border-color: rgba(255,77,46,0.3); transform: translateY(-2px); }
-.activ-icon { font-size: 1.8rem; flex-shrink: 0; }
+.activ-card:hover { border-color: rgba(217,95,46,0.3); transform: translateY(-2px); }
+.activ-icon { width: 26px; height: 26px; border: 2.5px solid var(--coral); transform: rotate(45deg); flex-shrink: 0; margin-top: 2px; }
 .activ-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; }
 .activ-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
 .activ-card a { color: var(--coral); text-decoration: none; }
@@ -316,13 +343,13 @@ section { padding: 100px 60px; position: relative; }
 #contacto { background: var(--paper2); }
 .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 .contact-left p { font-size: 1rem; color: var(--muted); line-height: 1.9; font-weight: 300; margin-bottom: 36px; }
-.contact-email { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.4rem, 2.2vw, 2rem); color: var(--ink); text-decoration: none; display: block; margin-bottom: 32px; transition: color 0.2s; letter-spacing: 1px; word-break: break-all; }
+.contact-email { font-family: 'Funnel Display', sans-serif; font-size: clamp(1.4rem, 2.2vw, 2rem); font-weight: 600; color: var(--ink); text-decoration: none; display: block; margin-bottom: 32px; transition: color 0.2s; letter-spacing: 1px; word-break: break-all; }
 .contact-email:hover { color: var(--coral); }
 .socials { display: flex; gap: 10px; flex-wrap: wrap; }
 .social-btn { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1.5px solid var(--border); border-radius: 2px; font-size: 0.72rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--text); text-decoration: none; background: var(--paper); transition: all 0.2s; }
 .social-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); transform: translateY(-2px); }
 .contact-form-area { background: var(--paper); border: 1px solid var(--border); border-radius: 2px; padding: 40px; }
-.contact-form-area h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; margin-bottom: 28px; }
+.contact-form-area h3 { font-family: 'Funnel Display', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 28px; }
 .form-group { margin-bottom: 18px; }
 .form-group label { display: block; font-size: 0.72rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
 .form-group input, .form-group textarea { width: 100%; padding: 11px 14px; background: var(--paper2); border: 1px solid var(--border); border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--text); transition: border-color 0.2s; resize: none; }
@@ -332,8 +359,8 @@ section { padding: 100px 60px; position: relative; }
 .form-submit:hover { background: var(--coral); }
 
 /* FOOTER */
-footer { background: var(--ink); color: rgba(245,240,232,0.3); padding: 32px 60px; display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; letter-spacing: 0.5px; font-family: 'DM Mono', monospace; }
-footer .f-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--paper); letter-spacing: 2px; }
+footer { background: var(--ink); color: rgba(247,241,228,0.3); padding: 32px 60px; display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; letter-spacing: 0.5px; font-family: 'DM Mono', monospace; }
+footer .f-logo { font-family: 'Funnel Display', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--paper); letter-spacing: 2px; }
 footer .f-logo span { color: var(--coral); }
 
 /* ANIMATIONS */
@@ -346,7 +373,7 @@ footer .f-logo span { color: var(--coral); }
   nav { padding: 16px 24px; }
   .nav-links { display: none; }
   .hero { grid-template-columns: 1fr; }
-  .hero-right { height: 280px; }
+  .hero-right { height: 400px; }
   .hero-left { padding: 100px 24px 60px; }
   section { padding: 72px 24px; }
   .about-grid, .contact-wrap, .formacion-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -402,7 +429,12 @@ footer .f-logo span { color: var(--coral); }
     </div>
   </div>
   <div class="hero-right">
-    <canvas id="heroCanvas"></canvas>
+    <div class="hero-collage">
+      <div class="collage-fig fig-a"><img src="images/flores.jpg" alt="Montaña, ojo y flores"></div>
+      <div class="collage-fig fig-b"><img src="images/musgo.jpg" alt="Musgo y espinillo"></div>
+      <div class="collage-fig fig-c"><img src="images/tejido.jpg" alt="Tejido"></div>
+      <div class="collage-fig fig-d"><img src="images/collage.png" alt="Collage"></div>
+    </div>
   </div>
   <div class="hero-scroll-hint">
     <div class="scroll-line"></div>
@@ -417,9 +449,8 @@ footer .f-logo span { color: var(--coral); }
       <div class="about-frame"></div>
       <div class="about-img-wrap">
         <img src="images/foto-perfil.jpg" alt="Celeste Camacho" style="width:100%;height:100%;object-fit:cover">
-        -->
         <div class="about-img-placeholder">
-          <span class="big">👤</span>
+          <span class="big"></span>
           <span>foto-perfil.jpg</span>
         </div>
       </div>
@@ -453,7 +484,7 @@ footer .f-logo span { color: var(--coral); }
         <span class="pill">Comunicación comunitaria</span>
       </div>
       <a href="docs/ilassa_program.pdf" target="_blank" class="cv-btn">
-        📄 Descargar CV
+        Descargar CV
       </a>
       <!-- Reemplazá el href con la ruta real a tu CV cuando lo subas:
            href="docs/celeste-camacho-cv.pdf" -->
@@ -468,37 +499,37 @@ footer .f-logo span { color: var(--coral); }
   <div class="services-grid">
     <div class="service-card reveal">
       <div class="service-num">01</div>
-      <span class="service-icon">📡</span>
+      <span class="service-icon"></span>
       <h3>Comunicación Digital Estratégica</h3>
       <p>Diseño de estrategias de comunicación digital para organizaciones, instituciones y proyectos territoriales. Gestión de redes, planificación editorial, identidad digital y campañas participativas.</p>
     </div>
     <div class="service-card reveal">
       <div class="service-num">02</div>
-      <span class="service-icon">📊</span>
+      <span class="service-icon"></span>
       <h3>Ciencia de Datos e Inteligencia Artificial</h3>
       <p>Análisis de datos, visualizaciones interactivas y aplicación de IA para generar insights accionables. Automatización de procesos y gestión de bases de datos.</p>
     </div>
     <div class="service-card reveal">
       <div class="service-num">03</div>
-      <span class="service-icon">🗺️</span>
+      <span class="service-icon"></span>
       <h3>Comunicación Territorial y Ambiental</h3>
       <p>Estrategias de comunicación ancladas en el territorio y el ambiente, con perspectiva de géneros y derechos humanos. Trabajo con medios comunitarios y organizaciones sociales.</p>
     </div>
     <div class="service-card reveal">
       <div class="service-num">04</div>
-      <span class="service-icon">🎨</span>
+      <span class="service-icon"></span>
       <h3>Diseño Visual y Arte Digital</h3>
       <p>Identidad visual, diseño gráfico y arte digital. Piezas para redes, materiales impresos, programas de eventos y entregables institucionales. Arte que comunica con precisión y estética.</p>
     </div>
     <div class="service-card reveal">
       <div class="service-num">05</div>
-      <span class="service-icon">🎬</span>
+      <span class="service-icon"></span>
       <h3>Producción Audiovisual</h3>
       <p>Producción, edición y dirección de contenido audiovisual. Videoarte, series documentales, microensayos audiovisuales y producciones comunitarias. Contenidos sonoros y podcast.</p>
     </div>
     <div class="service-card reveal">
       <div class="service-num">06</div>
-      <span class="service-icon">🎓</span>
+      <span class="service-icon"></span>
       <h3>Capacitación y Formación Docente</h3>
       <p>Talleres y cursos en alfabetización digital, comunicación estratégica, lenguajes sonoros y audiovisuales, tecnologías educativas e IA. Para docentes, equipos institucionales y organizaciones.</p>
     </div>
@@ -516,7 +547,7 @@ footer .f-logo span { color: var(--coral); }
       <div class="project-visual pv-2">
         <!-- Reemplazá con: <img src="images/ilassa.png" style="width:100%;height:100%;object-fit:cover"> -->
         <div class="pv-shape2"></div><div class="pv-shape"></div>
-        <span class="pv-icon">✦</span>
+        <span class="pv-icon"></span>
       </div>
       <div class="project-info">
         <div class="project-cats">
@@ -533,7 +564,7 @@ footer .f-logo span { color: var(--coral); }
           <img src="images/ilassa2.png" alt="ILASSA pieza 2" onerror="this.style.display='none'">
           <img src="images/ilassa3.png" alt="ILASSA pieza 3" onerror="this.style.display='none'">
         </div>
-        <a href="docs/ilassa_program.pdf" target="_blank" class="project-pdf-link">📄 Ver programa digital</a>
+        <a href="docs/ilassa_program.pdf" target="_blank" class="project-pdf-link">Ver programa digital</a>
       </div>
     </div>
 
@@ -541,7 +572,7 @@ footer .f-logo span { color: var(--coral); }
     <div class="project-card reveal">
       <div class="project-visual pv-1">
         <div class="pv-shape2"></div><div class="pv-shape"></div>
-        <span class="pv-icon">🎬</span>
+        <span class="pv-icon"></span>
       </div>
       <div class="project-info">
         <div class="project-cats">
@@ -561,7 +592,7 @@ footer .f-logo span { color: var(--coral); }
     <div class="project-card reveal">
       <div class="project-visual pv-3">
         <div class="pv-shape2"></div><div class="pv-shape"></div>
-        <span class="pv-icon">🌿</span>
+        <span class="pv-icon"></span>
       </div>
       <div class="project-info">
         <div class="project-cats">
@@ -580,7 +611,7 @@ footer .f-logo span { color: var(--coral); }
     <div class="project-card featured reveal">
       <div class="project-visual pv-4">
         <div class="pv-shape2"></div><div class="pv-shape"></div>
-        <span class="pv-icon">🏔️</span>
+        <span class="pv-icon"></span>
       </div>
       <div class="project-info">
         <div class="project-cats">
@@ -605,7 +636,7 @@ footer .f-logo span { color: var(--coral); }
     <div class="project-card reveal">
       <div class="project-visual pv-5">
         <div class="pv-shape2"></div><div class="pv-shape"></div>
-        <span class="pv-icon">🎙️</span>
+        <span class="pv-icon"></span>
       </div>
       <div class="project-info">
         <div class="project-cats">
@@ -623,7 +654,7 @@ footer .f-logo span { color: var(--coral); }
     <div class="project-card reveal">
       <div class="project-visual pv-6">
         <div class="pv-shape2"></div><div class="pv-shape"></div>
-        <span class="pv-icon">🤝</span>
+        <span class="pv-icon"></span>
       </div>
       <div class="project-info">
         <div class="project-cats">
@@ -768,42 +799,42 @@ footer .f-logo span { color: var(--coral); }
   <h2 class="section-title reveal">Activismo<br>y colectivos</h2>
   <div class="activ-grid reveal">
     <div class="activ-card">
-      <span class="activ-icon">🎉</span>
+      <span class="activ-icon"></span>
       <div>
         <h3>La Tricota Cultural</h3>
         <p>Integrante del encuentro y carnaval comunitario con 18 años de historia. Coordinación de cobertura colaborativa y gestión de redes sociales. <a href="https://www.instagram.com/tricotacultural_" target="_blank">@tricotacultural_</a></p>
       </div>
     </div>
     <div class="activ-card">
-      <span class="activ-icon">💻</span>
+      <span class="activ-icon"></span>
       <div>
         <h3>FLISOL Sierras Chicas</h3>
         <p>Integrante del Festival Latinoamericano de Instalación de Software Libre — movimiento que promueve la tecnología, cultura y conocimiento libres en la región. <a href="https://eventol.flisol.org.ar/events/flisol-sierras-chicas-2026/" target="_blank">Edición 2026</a></p>
       </div>
     </div>
     <div class="activ-card">
-      <span class="activ-icon">📻</span>
+      <span class="activ-icon"></span>
       <div>
         <h3>Cooperativa Chaski</h3>
         <p>Integrante de la cooperativa dedicada a formación, producción de contenidos, gestión de medios y asesoramiento a organizaciones. Miembros de FARCO. <a href="https://chaski.coop.ar" target="_blank">chaski.coop.ar</a></p>
       </div>
     </div>
     <div class="activ-card">
-      <span class="activ-icon">🌱</span>
+      <span class="activ-icon"></span>
       <div>
         <h3>Investigación — SECYT-UNC</h3>
         <p>Integrante del equipo "Transitando imágenes y territorios en la audiovisualidad de Córdoba (2010–2023)". Cartografías cinematográficas y derivas tecnopoéticas.</p>
       </div>
     </div>
     <div class="activ-card">
-      <span class="activ-icon">🎙️</span>
+      <span class="activ-icon"></span>
       <div>
         <h3>Pachamamita — Radio Eterogenia</h3>
         <p>Coordinación del proyecto comunicacional desde los ecofeminismos en el Centro Cultural España Córdoba. <a href="https://eterogenia.com.ar/albums/pachamamita/" target="_blank">Radio Eterogenia</a> · <a href="https://open.spotify.com/playlist/1soB3cV8j5e5Ua5K2MC11q" target="_blank">Spotify</a></p>
       </div>
     </div>
     <div class="activ-card">
-      <span class="activ-icon">🌎</span>
+      <span class="activ-icon"></span>
       <div>
         <h3>LLILAS Benson — UT Austin</h3>
         <p>Digital Scholarship Research Fellow 2026. Investigación sobre colecciones Tejiendo la Memoria y Voces de Mujeres, con enfoque en patrimonio, género y memoria desde América Latina.</p>
@@ -821,10 +852,10 @@ footer .f-logo span { color: var(--coral); }
       <p>¿Tenés un proyecto, una idea, o querés charlar sobre comunicación, datos o arte? Me encanta conectar con personas y organizaciones que tienen cosas interesantes para construir.</p>
       <a href="mailto:lic.celestecamacho@gmail.com" class="contact-email">lic.celestecamacho@gmail.com</a>
       <div class="socials">
-        <a href="#" class="social-btn">🔗 LinkedIn</a>
-        <a href="https://www.instagram.com/tricotacultural_" target="_blank" class="social-btn">📷 Instagram</a>
-        <a href="https://eventol.flisol.org.ar/events/flisol-sierras-chicas-2026/" target="_blank" class="social-btn">💻 FLISOL</a>
-        <a href="https://chaski.coop.ar" target="_blank" class="social-btn">📻 Chaski</a>
+        <a href="#" class="social-btn">LinkedIn</a>
+        <a href="https://www.instagram.com/tricotacultural_" target="_blank" class="social-btn">Instagram</a>
+        <a href="https://eventol.flisol.org.ar/events/flisol-sierras-chicas-2026/" target="_blank" class="social-btn">FLISOL</a>
+        <a href="https://chaski.coop.ar" target="_blank" class="social-btn">Chaski</a>
         <!-- Agregá tu LinkedIn cuando tengas el link -->
       </div>
     </div>
@@ -868,75 +899,6 @@ function animCursor() {
 }
 animCursor();
 
-// HERO CANVAS
-const canvas = document.getElementById('heroCanvas');
-const ctx = canvas.getContext('2d');
-let W, H, particles = [], t = 0;
-const COLORS = ['#ff4d2e','#00c9a7','#f5c400','#7b2fff','#00aaff'];
-function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
-resize();
-window.addEventListener('resize', resize);
-class Particle {
-  constructor() { this.reset(); }
-  reset() {
-    this.x = Math.random() * W; this.y = Math.random() * H;
-    this.size = Math.random() * 2 + 0.5;
-    this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-    this.vy = (Math.random() - 0.5) * 0.4;
-    this.life = 1; this.decay = Math.random() * 0.003 + 0.001;
-    this.ox = this.x; this.oy = this.y;
-    this.freq = Math.random() * 0.02 + 0.005;
-    this.amp = Math.random() * 30 + 10;
-  }
-  update() {
-    this.x = this.ox + Math.sin(t * this.freq + this.oy * 0.01) * this.amp;
-    this.y += this.vy * 0.5; this.life -= this.decay;
-    if (this.life <= 0 || this.y > H || this.y < 0) this.reset();
-  }
-  draw() {
-    ctx.save(); ctx.globalAlpha = this.life * 0.8;
-    ctx.fillStyle = this.color; ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); ctx.restore();
-  }
-}
-for (let i = 0; i < 220; i++) particles.push(new Particle());
-function drawLines() {
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
-      const d = Math.sqrt(dx*dx + dy*dy);
-      if (d < 80) {
-        ctx.save(); ctx.globalAlpha = (1 - d/80) * 0.12;
-        ctx.strokeStyle = particles[i].color; ctx.lineWidth = 0.5;
-        ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); ctx.restore();
-      }
-    }
-  }
-}
-function drawShapes() {
-  ctx.save(); ctx.globalAlpha = 0.04; ctx.strokeStyle = '#f5c400'; ctx.lineWidth = 1;
-  const cx = W * 0.5, cy = H * 0.5, r = Math.min(W,H) * 0.38;
-  ctx.beginPath(); ctx.arc(cx + Math.sin(t*0.003)*10, cy + Math.cos(t*0.002)*10, r, 0, Math.PI*2); ctx.stroke(); ctx.restore();
-  ctx.save(); ctx.globalAlpha = 0.05; ctx.strokeStyle = '#00c9a7'; ctx.lineWidth = 0.8;
-  const ang = t * 0.002, tr = r * 0.7;
-  ctx.beginPath();
-  for (let i = 0; i < 3; i++) {
-    const a = ang + (i * Math.PI * 2/3);
-    i === 0 ? ctx.moveTo(cx + Math.cos(a)*tr, cy + Math.sin(a)*tr) : ctx.lineTo(cx + Math.cos(a)*tr, cy + Math.sin(a)*tr);
-  }
-  ctx.closePath(); ctx.stroke(); ctx.restore();
-}
-function animate() {
-  t++;
-  ctx.fillStyle = 'rgba(14,12,10,0.15)';
-  ctx.fillRect(0, 0, W, H);
-  drawShapes(); drawLines();
-  particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animate);
-}
-animate();
-
 // REVEAL
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver(entries => {
@@ -948,8 +910,8 @@ reveals.forEach(el => observer.observe(el));
 
 // FORM
 document.querySelector('.form-submit').addEventListener('click', function() {
-  this.textContent = '✓ Mensaje enviado';
-  this.style.background = '#00c9a7';
+  this.textContent = 'Mensaje enviado';
+  this.style.background = '#6d8a5c';
   setTimeout(() => { this.textContent = 'Enviar mensaje'; this.style.background = ''; }, 3000);
 });
 </script>
